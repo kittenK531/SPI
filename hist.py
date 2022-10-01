@@ -27,7 +27,9 @@ far_ = np.append(far_,  4.056* np.ones(18))
 
 ax.grid(axis='y')
 
-ax.hist(cent, bins=30, label = "Central Maximum", color="#1f77b4")
+ax.errorbar(np.array([2.786, 2.83, 2.873, 3.391, 3.434, 3.4748, 4.036, 4.08, 4.1235]), np.array([21, 18, 20, 20, 78, 25, 18, 13, 26]), yerr=np.array([1.38, 1.29, 1.28, 1.37, 2.67, 1.51, 1.06, 1.12, 1.55]), fmt='none', label="errors")
+
+ax.hist(cent, bins=30, label = "Central Maximum", color="#17becf")
 ax.hist(near, bins=30, label = "Near slit diffraction", color = "#ff7f0e")
 ax.hist(far_, bins=30, label = "Far Slit diffraction", color="#2ca02c")
 ax.set_xticklabels(['',r'$-1$','','','0','','',r'$+1$',''])
@@ -37,3 +39,5 @@ plt.xlabel(r"Double-slit position in terms of order of period ($T/2$)")
 plt.ylabel(r"Photon count rate from PCIT ($count/s$)")
 plt.show(block=False)
 plt.savefig("plots/pdf/histogram/quantum_paradox.pdf")
+
+##ERROR bar
