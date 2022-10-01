@@ -118,28 +118,28 @@ blkd_xnew = np.linspace(0, 8, num=101, endpoint=True)
 both_errb = np.array([np.sqrt(np.sum(both[x]))/len(both[x])for x in range(len(both))])
 far__errb = np.array([np.sqrt(np.sum(far_[x]))/len(far_[x])for x in range(len(far_))])
 near_errb = np.array([np.sqrt(np.sum(near[x]))/len(near[x])for x in range(len(near))])
-# blkd_errb = np.array([np.sqrt(np.sum(blkd[x]))/len(blkd[x])for x in range(len(blkd))])
+blkd_errb = np.array([np.sqrt(np.sum(blkd[x]))/len(blkd[x])for x in range(len(blkd))])
 
 plt.figure(figsize=(12, 5))
 
 
 """Plotting rqaw data error bars (order matters)"""
 """
-plt.errorbar(both_x, both_avg, yerr=both_errb,  fmt=".")
-plt.errorbar(near_x, near_avg, yerr=near_errb,  fmt=".")
-plt.errorbar(far__x, far__avg, yerr=far__errb,  fmt=".")
-# plt.errorbar(blkd_x, blkd_avg, yerr=blkd_errb,  fmt=".")
-# plt.errorbar(blkd_x, dark_avg, yerr=err_avg_count_rate,  fmt=".")
+plt.errorbar(both_x, both_avg, yerr=both_errb,  fmt=".", label = "interference model")
+plt.errorbar(near_x, near_avg, yerr=near_errb,  fmt=".", label = "diffraction from near slit")
+plt.errorbar(far__x, far__avg, yerr=far__errb,  fmt=".", label = "diffraction from far slit")
+# plt.errorbar(blkd_x, blkd_avg, yerr=blkd_errb,  fmt=".", label = "PMT shuttered")
+# plt.errorbar(blkd_x, dark_avg, yerr=err_avg_count_rate,  fmt=".", label = "PMT shuttered (averaged)")
 
 both_ynew, far__ynew, near_ynew, blkd_ynew = f(both_xnew), f2(far__xnew), f1(near_xnew), f3(blkd_xnew)
 
-plt.plot(both_xnew, both_ynew, color = "#1f77b4", label = "interference model")
-plt.plot(far__xnew, far__ynew, color = "#2ca02c", label = "diffraction from far slit")
-plt.plot(near_xnew, near_ynew, color = "#ff7f0e", label = "diffraction from near slit")
-# plt.plot(blkd_xnew, blkd_ynew, color = "#d62728", label = "dark")
-plt.plot(blkd_x, dark_avg, color = "black",linestyle='dashed', label = "averaged dark counts")
+plt.plot(both_xnew, both_ynew, color = "#1f77b4")
+plt.plot(far__xnew, far__ynew, color = "#2ca02c")
+plt.plot(near_xnew, near_ynew, color = "#ff7f0e")
+# plt.plot(blkd_xnew, blkd_ynew, color = "#d62728")
+plt.plot(blkd_x, dark_avg, color = "black",linestyle='dashed')
 
-plt.fill_between(blkd_x, dark_avg - err_avg_count_rate, dark_avg + err_avg_count_rate, color='gray', alpha=0.2)
+plt.fill_between(blkd_x, dark_avg - err_avg_count_rate, dark_avg + err_avg_count_rate, color='gray', alpha=0.9, label = "PMT shuttered (averaged)")
 """
 
 """Corrected signal"""
@@ -147,15 +147,15 @@ both_errb_corr = np.sqrt(both_errb**2 + err_avg_count_rate_scalar**2)
 far__errb_corr = np.sqrt(far__errb**2 + err_avg_count_rate_scalar**2)
 near_errb_corr = np.sqrt(near_errb**2 + err_avg_count_rate_scalar**2)
 
-plt.errorbar(both_x, both_avg - dark_avg_scalar, yerr=both_errb_corr,  fmt=".")
-plt.errorbar(near_x, near_avg - dark_avg_scalar, yerr=near_errb_corr,  fmt=".")
-plt.errorbar(far__x, far__avg - dark_avg_scalar, yerr=far__errb_corr,  fmt=".")
+plt.errorbar(both_x, both_avg - dark_avg_scalar, yerr=both_errb_corr,  fmt=".", label = "interference model")
+plt.errorbar(near_x, near_avg - dark_avg_scalar, yerr=near_errb_corr,  fmt=".", label = "diffraction from far slit")
+plt.errorbar(far__x, far__avg - dark_avg_scalar, yerr=far__errb_corr,  fmt=".", label = "diffraction from near slit")
 
 both_ynew, far__ynew, near_ynew, blkd_ynew = f(both_xnew), f2(far__xnew), f1(near_xnew), f3(blkd_xnew)
 
-plt.plot(both_xnew, both_ynew - dark_avg_scalar, color = "#1f77b4", label = "interference model")
-plt.plot(far__xnew, far__ynew - dark_avg_scalar, color = "#2ca02c", label = "diffraction from far slit")
-plt.plot(near_xnew, near_ynew - dark_avg_scalar, color = "#ff7f0e", label = "diffraction from near slit")
+plt.plot(both_xnew, both_ynew - dark_avg_scalar, color = "#1f77b4")
+plt.plot(far__xnew, far__ynew - dark_avg_scalar, color = "#2ca02c")
+plt.plot(near_xnew, near_ynew - dark_avg_scalar, color = "#ff7f0e")
 # plt.plot(blkd_xnew, blkd_ynew, color = "#d62728", label = "dark")
 # plt.plot(blkd_x, dark_avg, color = "black",linestyle='dashed', label = "averaged dark counts")
 
@@ -168,6 +168,6 @@ plt.ylabel(r"Photon count rate from PCIT ($count/s$)")
 plt.legend(loc="best")
 
 plt.show(block = False)
-plt.savefig("final_inter.pdf")
+plt.savefig("plots/pdf/interference_pattern/final_inter.pdf")
 
 
