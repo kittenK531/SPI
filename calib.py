@@ -96,7 +96,7 @@ bg2__err = np.sqrt(((both_ebr**2 + dark_ebr**2)/(both_avg - dark_avg +0.0001))**
 
 """plt.plot(both_xnew, (f(both_xnew) - f3(both_xnew))/f3(both_xnew), color = "#1f77b4")
 plt.errorbar(Discrimiator, (both_avg - clse_avg)/clse_avg, yerr=bg1__err, fmt='.', label = "SNR with bg as PMT shuttered")"""
-plt.plot(both_xnew, (f(both_xnew) - f2(both_xnew))/f2(both_xnew), color = "#ff7f0e")
+plt.plot(both_xnew, (f(both_xnew) - f2(both_xnew))/f2(both_xnew), color = "#1f77b4")
 plt.errorbar(Discrimiator, (both_avg - dark_avg)/dark_avg, yerr=bg2__err, fmt='.', label = "SNR with bg as slits blocked")
 # plt.errorbar(Discrimiator, dark_avg, yerr=dark_ebr, fmt='.', label = "Slits Blocked")
 # plt.errorbar(Discrimiator, clse_avg, yerr=clse_ebr, fmt='.', label = "PMT shuttered")
