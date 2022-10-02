@@ -153,21 +153,21 @@ plt.errorbar(far__x, far__avg - dark_avg_scalar, yerr=far__errb_corr,  fmt=".", 
 
 both_ynew, far__ynew, near_ynew, blkd_ynew = f(both_xnew), f2(far__xnew), f1(near_xnew), f3(blkd_xnew)
 
-plt.plot(both_xnew, both_ynew - dark_avg_scalar, color = "#1f77b4")
-plt.plot(far__xnew, far__ynew - dark_avg_scalar, color = "#2ca02c")
-plt.plot(near_xnew, near_ynew - dark_avg_scalar, color = "#ff7f0e")
+plt.plot(both_xnew, both_ynew - blkd_ynew, color = "#1f77b4")
+plt.plot(far__xnew, far__ynew - blkd_ynew, color = "#2ca02c")
+plt.plot(near_xnew, near_ynew - blkd_ynew, color = "#ff7f0e")
 # plt.plot(blkd_xnew, blkd_ynew, color = "#d62728", label = "dark")
 # plt.plot(blkd_x, dark_avg, color = "black",linestyle='dashed', label = "averaged dark counts")
 
 plt.xlim(1, 6)
 plt.ylim(0,75)
 
-plt.title("Two slit interference signal obtained with bulb illumination (corrected)")
+plt.title("Two slit interference signal obtained with bulb illumination (corrected with profile)")
 plt.xlabel(r"Double-slit position ($mm$)")
 plt.ylabel(r"Photon count rate from PCIT ($count/s$)")
 plt.legend(loc="best")
 
 plt.show(block = False)
-plt.savefig("plots/pdf/interference_pattern/final_inter.pdf")
+plt.savefig("plots/pdf/interference_pattern/corrected_signal_profile_subtrasction.pdf")
 
 
