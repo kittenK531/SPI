@@ -2,10 +2,14 @@ from sys import float_repr_style
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
-"""
-both_x  = np.array([2.25, 2.33, 2.41, 2.49, 2.57, 2.81, 3.05, 3.13, 3.21, 3.29, 3.37, 3.45, 3.53, 3.61, 3.69, 3.77, 3.85, 3.93, 4.00, 4.10, 4.25, 4.33, 4.41])
 
-both    = np.array([[32, 33, 38, 28, 30, 38, 33, 43, 43, 24, 40],
+both_x_old  = np.array([2.25, 2.33, 2.41, 2.49, 2.57, 2.81, 3.05, 3.13, 3.21, 3.29, 3.37, 3.45, 3.53, 3.61, 3.69, 3.77, 3.85, 3.93, 4.00, 4.10, 4.25, 4.33, 4.41])-3.45 # / 0.64 * np.pi /2
+
+angle = np.arctan(both_x_old)
+
+print(both_x_old)
+
+both_old    = np.array([[32, 33, 38, 28, 30, 38, 33, 43, 43, 24, 40],
                     [19, 23, 27, 23, 21, 19, 23, 21, 27, 22, 19],
                     [22, 16, 21, 23, 19, 15, 25, 19, 19, 18, 21],
                     [17, 14, 20, 19, 23, 20, 21, 17, 18, 11, 21],
@@ -27,7 +31,8 @@ both    = np.array([[32, 33, 38, 28, 30, 38, 33, 43, 43, 24, 40],
                     [53, 55, 57, 70, 58, 55, 62, 75, 65, 61, 63],
                     [55, 56, 47, 58, 48, 47, 53, 45, 50, 61, 46],
                     [33, 27, 37, 28, 36, 32, 22, 32, 28, 41, 39],
-                    [18, 19, 15, 13, 15, 28, 20, 16, 20, 11, 26]])"""
+                    [18, 19, 15, 13, 15, 28, 20, 16, 20, 11, 26]])
+both_old_avg = np.array([np.sum(both_old[x])/len(both_old[x]) for x in range(len(both_old))])
 
 
 both_x  = np.array([2.49, 2.57, 2.81, 3.05, 3.13, 3.21, 3.29, 3.37, 3.45, 3.53, 3.61, 3.69, 3.77, 3.85, 3.93, 4.00, 4.10, 4.25, 4.33, 4.41])
@@ -129,10 +134,11 @@ plt.errorbar(both_x, both_avg, yerr=both_errb,  fmt=".", label = "interference m
 plt.errorbar(near_x, near_avg, yerr=near_errb,  fmt=".", label = "diffraction from near slit")
 plt.errorbar(far__x, far__avg, yerr=far__errb,  fmt=".", label = "diffraction from far slit")
 # plt.errorbar(blkd_x, blkd_avg, yerr=blkd_errb,  fmt=".", label = "PMT shuttered")
-# plt.errorbar(blkd_x, dark_avg, yerr=err_avg_count_rate,  fmt=".", label = "PMT shuttered (averaged)")
+# plt.errorbar(blkd_x, dark_avg, yerr=err_avg_count_rate,  fmt=".", label = "PMT shuttered (averaged)")"""
 
 both_ynew, far__ynew, near_ynew, blkd_ynew = f(both_xnew), f2(far__xnew), f1(near_xnew), f3(blkd_xnew)
 
+"""
 plt.plot(both_xnew, both_ynew, color = "#1f77b4")
 plt.plot(far__xnew, far__ynew, color = "#2ca02c")
 plt.plot(near_xnew, near_ynew, color = "#ff7f0e")
@@ -144,10 +150,11 @@ plt.fill_between(blkd_x, dark_avg - err_avg_count_rate, dark_avg + err_avg_count
 
 """Corrected signal"""
 both_errb_corr = np.sqrt(both_errb**2 + err_avg_count_rate_scalar**2)
-far__errb_corr = np.sqrt(far__errb**2 + err_avg_count_rate_scalar**2)
-near_errb_corr = np.sqrt(near_errb**2 + err_avg_count_rate_scalar**2)
+"""far__errb_corr = np.sqrt(far__errb**2 + err_avg_count_rate_scalar**2)
+near_errb_corr = np.sqrt(near_errb**2 + err_avg_count_rate_scalar**2)"""
 
-plt.errorbar(both_x, both_avg - dark_avg_scalar, yerr=both_errb_corr,  fmt=".", label = "interference model")
+plt.errorbar(np.arctan(both_x-3.45)/np.pi, both_avg - dark_avg_scalar, yerr=both_errb_corr,  fmt=".", label = "interference model")
+"""
 plt.errorbar(near_x, near_avg - dark_avg_scalar, yerr=near_errb_corr,  fmt=".", label = "diffraction from far slit")
 plt.errorbar(far__x, far__avg - dark_avg_scalar, yerr=far__errb_corr,  fmt=".", label = "diffraction from near slit")
 
@@ -155,19 +162,35 @@ both_ynew, far__ynew, near_ynew, blkd_ynew = f(both_xnew), f2(far__xnew), f1(nea
 
 plt.plot(both_xnew, both_ynew - blkd_ynew, color = "#1f77b4")
 plt.plot(far__xnew, far__ynew - blkd_ynew, color = "#2ca02c")
-plt.plot(near_xnew, near_ynew - blkd_ynew, color = "#ff7f0e")
+plt.plot(near_xnew, near_ynew - blkd_ynew, color = "#ff7f0e")"""
 # plt.plot(blkd_xnew, blkd_ynew, color = "#d62728", label = "dark")
 # plt.plot(blkd_x, dark_avg, color = "black",linestyle='dashed', label = "averaged dark counts")
-
+"""
 plt.xlim(1, 6)
-plt.ylim(0,75)
+plt.ylim(0,75)"""
+
+from scipy.optimize import curve_fit
+
+d = 0.406e-3
+a = 0.1e-3
+llambda = 0.551e-6
+def func(x, alpha, phi, I):
+    return I * np.cos(phi * np.sin(x))**2 * np.sinc(alpha * np.sin(x))**2 + dark_avg_scalar
+
+popt, pcov = curve_fit(func, angle, both_old_avg)
+
+print(popt)
+
+opt_x = np.arctan(both_xnew-3.45)
+
+plt.plot(opt_x / np.pi, func(opt_x, *popt), 'r-', label = "Fitted value")
 
 plt.title("Two slit interference signal obtained with bulb illumination (corrected with profile)")
-plt.xlabel(r"Double-slit position ($mm$)")
+plt.xlabel(r"Angular position in $\pi$")
 plt.ylabel(r"Photon count rate from PCIT ($count/s$)")
 plt.legend(loc="best")
 
 plt.show(block = False)
-plt.savefig("plots/pdf/interference_pattern/corrected_signal_profile_subtrasction.pdf")
+plt.savefig("test.pdf")
 
 
