@@ -156,11 +156,12 @@ near_errb_corr = np.sqrt(near_errb**2 + err_avg_count_rate_scalar**2)"""
 plt.errorbar(np.arctan(both_x-3.45)/np.pi, both_avg - dark_avg_scalar, yerr=both_errb_corr,  fmt=".", label = "interference model")
 """
 plt.errorbar(near_x, near_avg - dark_avg_scalar, yerr=near_errb_corr,  fmt=".", label = "diffraction from far slit")
-plt.errorbar(far__x, far__avg - dark_avg_scalar, yerr=far__errb_corr,  fmt=".", label = "diffraction from near slit")
+plt.errorbar(far__x, far__avg - dark_avg_scalar, yerr=far__errb_corr,  fmt=".", label = "diffraction from near slit")"""
 
 both_ynew, far__ynew, near_ynew, blkd_ynew = f(both_xnew), f2(far__xnew), f1(near_xnew), f3(blkd_xnew)
 
-plt.plot(both_xnew, both_ynew - blkd_ynew, color = "#1f77b4")
+plt.plot(np.arctan(both_xnew-3.45)/np.pi, both_ynew - blkd_ynew, color = "#1f77b4")
+"""
 plt.plot(far__xnew, far__ynew - blkd_ynew, color = "#2ca02c")
 plt.plot(near_xnew, near_ynew - blkd_ynew, color = "#ff7f0e")"""
 # plt.plot(blkd_xnew, blkd_ynew, color = "#d62728", label = "dark")
@@ -174,16 +175,19 @@ from scipy.optimize import curve_fit
 d = 0.406e-3
 a = 0.1e-3
 llambda = 0.551e-6
-def func(x, alpha, phi, I):
-    return I * np.cos(phi * np.sin(x))**2 * np.sinc(alpha * np.sin(x))**2 + dark_avg_scalar
+def func(x, alpha, phi):
+    return 70 * np.cos(phi * np.sin(x))**2 * np.sinc(alpha * np.sin(x))**2
 
 popt, pcov = curve_fit(func, angle, both_old_avg)
 
-print(popt)
+print(popt, np.absolute(pcov[0,0])**0.5, np.absolute(pcov[1,1])**0.5)
 
 opt_x = np.arctan(both_xnew-3.45)
 
+plt.plot(opt_x / np.pi, 70 * np.sinc(popt[0] * np.sin(opt_x))**2, 'orange', linestyle = "dashed", label = "Diffraction envelope")
 plt.plot(opt_x / np.pi, func(opt_x, *popt), 'r-', label = "Fitted value")
+
+plt.fill_between(opt_x/np.pi, func(opt_x, popt[0]+np.absolute(pcov[0,0])**0.5, popt[1]+np.absolute(pcov[1,1])**0.5), func(opt_x, popt[0]-np.absolute(pcov[0,0])**0.5, popt[1]-np.absolute(pcov[1,1])**0.5), alpha = 0.5, color = "pink", label="error band")
 
 plt.title("Two slit interference signal obtained with bulb illumination (corrected with profile)")
 plt.xlabel(r"Angular position in $\pi$")
